@@ -1,0 +1,61 @@
+server:
+  port: 8080
+
+spring:
+  redis:
+    host: redis
+    port: 6379
+
+  cloud:
+    gateway:
+      httpclient:
+        websocket:
+          max-frame-payload-length: 65536
+
+      routes:
+
+        # ======================
+        # Auth Service
+        # ======================
+        - id: auth-service
+          uri: http://dearlavion-authentication-service:{{auth_port}}
+          predicates:
+            - Path=/api/auth/**
+          filters:
+            - RewritePath=/api/auth/(?<segment>.*), /${segment}
+
+        # ======================
+        # Core Service
+        # ======================
+        - id: core-service
+          uri: http://dearlavion-core-service:{{core_port}}
+          predicates:
+            - Path=/api/core/**
+          filters:
+            - RewritePath=/api/core/(?<segment>.*), /${segment}
+            # Optional rate limiting later
+            # - name: RequestRateLimiter
+            #   args:
+            #     key-resolver: "#{@userOrIpKeyResolver}"
+            #     redis-rate-limiter.replenishRate: 10
+            #     redis-rate-limiter.burstCapacity: 20
+
+        # ======================
+        # Notification Service (WebSocket)
+        # ======================
+        - id: notification-service
+          uri: http://dearlavion-notification-service:{{notification_port}}
+          predicates:
+            - Path=/api/notification/**
+          filters:
+            - RewritePath=/api/notification/(?<segment>.*), /${segment}
+
+        # ======================
+        # Kafka UI (AKHQ)
+        # ======================
+        - id: akhq
+          uri: http://dearlavion-akhq:{{akhq_port}}
+          predicates:
+            - Path=/api/kafka/**
+          filters:
+            - StripPrefix=2
