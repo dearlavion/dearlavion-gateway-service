@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 public class GatewayConfig {
 
     @Bean
-    public KeyResolver userOrIpKeyResolver() {
+    public KeyResolver userOrIpKeyResolverBean() {
         return exchange -> {
 
             String token = exchange.getRequest()

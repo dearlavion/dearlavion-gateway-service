@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 public class IpKeyResolver {
 
     @Bean
-    public KeyResolver ipKeyResolver() {
+    public KeyResolver ipKeyResolverBean() {
         return exchange -> Mono.just(
                 exchange.getRequest()
                         .getRemoteAddress()

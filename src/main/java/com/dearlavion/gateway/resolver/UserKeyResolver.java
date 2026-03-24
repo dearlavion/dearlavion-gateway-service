@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 public class UserKeyResolver {
 
     @Bean
-    public KeyResolver userKeyResolver() {
+    public KeyResolver userKeyResolverBean() {
         return exchange -> {
 
             String token = exchange.getRequest()
