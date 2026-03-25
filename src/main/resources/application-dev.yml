@@ -31,7 +31,8 @@ spring:
           uri: "http://dearlavion-core-service:${core_port}"
           predicates:
             - Path=/api/core/**
-          #filters:
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
             # Optional rate limiting later
             # - name: RequestRateLimiter
             #   args:
