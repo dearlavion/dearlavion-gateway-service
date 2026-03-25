@@ -18,7 +18,7 @@ spring:
         # Auth Service
         # ======================
         - id: auth-service
-          uri: http://dearlavion-authentication-service:{{auth_port}}
+          uri: "http://dearlavion-authentication-service:${auth_port}"
           predicates:
             - Path=/api/auth/**
           filters:
@@ -28,7 +28,7 @@ spring:
         # Core Service
         # ======================
         - id: core-service
-          uri: http://dearlavion-core-service:{{core_port}}
+          uri: "http://dearlavion-core-service:${core_port}"
           predicates:
             - Path=/api/core/**
           filters:
@@ -36,7 +36,7 @@ spring:
             # Optional rate limiting later
             # - name: RequestRateLimiter
             #   args:
-            #     key-resolver: "#{@userOrIpKeyResolver}"
+            #     key-resolver: "#{@userKeyResolver}"
             #     redis-rate-limiter.replenishRate: 10
             #     redis-rate-limiter.burstCapacity: 20
 
@@ -44,7 +44,7 @@ spring:
         # Notification Service (WebSocket)
         # ======================
         - id: notification-service
-          uri: http://dearlavion-notification-service:{{notification_port}}
+          uri: "http://dearlavion-notification-service:${notification_port}"
           predicates:
             - Path=/api/notification/**
           filters:
@@ -54,7 +54,7 @@ spring:
         # Kafka UI (AKHQ)
         # ======================
         - id: akhq
-          uri: http://dearlavion-akhq:{{akhq_port}}
+          uri: "http://dearlavion-akhq:${akhq_port}"
           predicates:
             - Path=/api/kafka/**
           filters:
