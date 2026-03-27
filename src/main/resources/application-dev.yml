@@ -24,6 +24,12 @@ spring:
             - Path=/api/auth/**
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@userOrIpKeyResolverBean}"
+                redis-rate-limiter:
+                  replenishRate: 1
+                  burstCapacity: 2
 
         # ======================
         # Core Service
