@@ -73,7 +73,7 @@ spring:
         # Kafka UI (AKHQ)
         # ======================
         - id: akhq
-          uri: "http://dearlavion-akhq:${akhq_port}"
+          uri: "http://dearlavion-akhq:${AKHQ_PORT}"
           predicates:
             - Path=/api/kafka/**
           filters:
