@@ -22,6 +22,16 @@ spring:
             - RewritePath=/api/(?<segment>.*), /${segment}
 
         # ======================
+        # Booking Engine
+        # ======================
+        - id: booking-engine
+          uri: "http://dearlavion-booking-engine:${BOOKING_PORT}"
+          predicates:
+            - Path=/api/booking/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+
+        # ======================
         # Auth Service
         # ======================
         - id: auth-service

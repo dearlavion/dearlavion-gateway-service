@@ -25,6 +25,18 @@ spring:
             - RewritePath=/api/auth/(?<segment>.*), /${segment}
 
         # ======================
+        # Booking Engine
+        # ======================
+        # Strips only the /api prefix (unlike the auth/core routes above): booking-engine's
+        # controllers live under /booking/**, so /api/booking/businesses -> /booking/businesses.
+        - id: booking-engine
+          uri: http://dearlavion-booking-engine:{{booking_port}}
+          predicates:
+            - Path=/api/booking/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+
+        # ======================
         # Core Service
         # ======================
         - id: core-service
