@@ -67,11 +67,57 @@ spring:
         # Notification Service (WebSocket)
         # ======================
         - id: notification-service
-          uri: "http://dearlavion-notification-service:${NOTIFICATION_PORT}"
+          uri: "http://dearlavion-spring-notification-service:${NOTIFICATION_PORT}"
           predicates:
             - Path=/api/notification/**
           filters:
             - RewritePath=/api/(?<segment>.*), /${segment}
+
+        # ======================
+        # Store Engine v2 (Travel Besty)
+        # ======================
+        - id: store-engine-v2
+          uri: "http://dearlavion-spring-store-engine-v2:${STORE_ENGINE_V2_PORT}"
+          predicates:
+            - Path=/api/store-engine-v2/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+
+        # ======================
+        # Payment Service v2 (Travel Besty)
+        # ======================
+        - id: payment-service-v2
+          uri: "http://dearlavion-spring-payment-service-v2:${PAYMENT_SERVICE_V2_PORT}"
+          predicates:
+            - Path=/api/payment-service-v2/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+
+        # ======================
+        # Master Data Service (Travel Besty reference data)
+        # ======================
+        - id: master-data
+          uri: "http://dearlavion-spring-master-data-service:${MASTER_DATA_PORT}"
+          predicates:
+            - Path=/api/master-data/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+
+        # ======================
+        # Authentication Service v3 (multi-tenant, Travel Besty)
+        # ======================
+        - id: auth-v3
+          uri: "http://dearlavion-spring-authentication-service-v3:${AUTH_V3_PORT}"
+          predicates:
+            - Path=/api/auth-v3/**
+          filters:
+            - RewritePath=/api/(?<segment>.*), /${segment}
+            - name: RequestRateLimiter
+              args:
+                key-resolver: "#{@userOrIpKeyResolverBean}"
+                redis-rate-limiter:
+                  replenishRate: 1
+                  burstCapacity: 2
 
         # ======================
         # Kafka UI (AKHQ)
