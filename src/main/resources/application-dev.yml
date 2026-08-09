@@ -15,7 +15,7 @@ spring:
 
       routes:
         - id: media-service
-          uri: "http://dearlavion-media-service:${MEDIA_PORT}"
+          uri: "http://dearlavion-spring-media-service:${MEDIA_PORT}"
           predicates:
             - Path=/api/media/**
           filters:
